@@ -1,0 +1,21 @@
+#!/usr/bin/env php
+
+<?php
+
+require_once __DIR__ . '/../vendor/autoload.php';
+
+$url = 'http://ipgeobase.ru:7020/geo?ip=';
+$ip = '91.78.218.99';
+
+$client = new \Php\Package\HttpClient(new \GuzzleHttp\Client(), 'GET', $url);
+$parser = new \Php\Package\Parser();
+
+$geoBase = new \Php\Package\Geobase($client, $parser);
+$geoData = $geoBase->requestData($ip);
+
+echo $geoData->getInetnum() . PHP_EOL;
+echo $geoData->getCountry() . PHP_EOL;
+echo $geoData->getCity() . PHP_EOL;
+echo $geoData->getRegion() . PHP_EOL;
+echo $geoData->getLat() . PHP_EOL;
+echo $geoData->getLng() . PHP_EOL;
