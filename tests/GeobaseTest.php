@@ -5,8 +5,8 @@ namespace Php\Package\Tests;
 use Php\Package\Dto\GeobaseData;
 use Php\Package\Geobase;
 use Php\Package\HttpClient;
-use \PHPUnit\Framework\TestCase;
-use \Php\Package\GeobaseParser;
+use Php\Package\GeobaseParser;
+use PHPUnit\Framework\TestCase;
 
 class GeobaseTest extends TestCase
 {
@@ -74,6 +74,10 @@ XML;
         $httpClient = $this->createMock(HttpClient::class);
         $httpClient
             ->method('request')
+            ->willReturn($xml);
+
+        $httpClient
+            ->method('__invoke')
             ->willReturn($xml);
 
         $parser = new GeobaseParser();

@@ -4,6 +4,7 @@ namespace Php\Package;
 
 use Exception;
 use GuzzleHttp\Exception\GuzzleException;
+use League\Pipeline\Pipeline;
 use Php\Package\Dto\GeobaseData;
 use Php\Package\Exception\GeobaseException;
 
@@ -38,8 +39,11 @@ class Geobase
         }
 
         try {
-            $rawData = $this->httpClient->request($ip);
-            return $this->parser->parse($rawData);
+            $pipeline = (new Pipeline)
+                ->pipe($this->httpClient)
+                ->pipe($this->parser);
+
+            return $pipeline($ip);
         } catch (GuzzleException|Exception $exception) {
             throw new GeobaseException($exception->getMessage(), $exception->getCode(), $exception);
         }

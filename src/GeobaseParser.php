@@ -2,12 +2,24 @@
 
 namespace Php\Package;
 
+use League\Pipeline\StageInterface;
 use Php\Package\Dto\GeobaseData;
 use Php\Package\Exception\GeobaseException;
 use SimpleXMLElement;
 
-class GeobaseParser
+class GeobaseParser implements StageInterface
 {
+    /**
+     * @param string $payload
+     * @return GeobaseData
+     *
+     * @throws GeobaseException
+     */
+    public function __invoke($payload): GeobaseData
+    {
+        return $this->parse($payload);
+    }
+
     /**
      * @param string $xml
      * @return GeobaseData

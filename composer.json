@@ -25,7 +25,8 @@
     "nesbot/carbon": "^1.26",
     "danielstjules/stringy": "^3.1",
     "guzzlehttp/guzzle": "^6.3",
-    "ext-SimpleXML": "^7.2"
+    "ext-SimpleXML": "^7.2",
+    "league/pipeline": "^1.0"
   },
   "require-dev": {
     "symfony/var-dumper": "^4.0",

@@ -3,8 +3,9 @@
 namespace Php\Package;
 
 use GuzzleHttp\ClientInterface;
+use League\Pipeline\StageInterface;
 
-class HttpClient
+class HttpClient implements StageInterface
 {
     /**
      * @var ClientInterface
@@ -32,6 +33,19 @@ class HttpClient
         $this->client = $client;
         $this->method = $method;
         $this->url = $url;
+    }
+
+    /**
+     * @param string $payload
+     * @return string
+     *
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function __invoke($payload): string
+    {
+        var_dump('tetetetetet');
+        var_dump($payload);
+        return $this->request($payload);
     }
 
     /**
