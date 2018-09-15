@@ -15,7 +15,6 @@ class ParserTest extends TestCase
         $this->parser = new Parser();
     }
 
-
     public function testParse()
     {
         $xml = <<<XML

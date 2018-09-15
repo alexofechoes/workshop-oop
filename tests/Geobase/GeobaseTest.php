@@ -77,7 +77,6 @@ XML;
             ->method('request')
             ->willReturn($httpResponse);
 
-
         $geobase = new Geobase($httpClient);
 
         return $geobase;
