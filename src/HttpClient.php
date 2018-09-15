@@ -43,8 +43,6 @@ class HttpClient implements StageInterface
      */
     public function __invoke($payload): string
     {
-        var_dump('tetetetetet');
-        var_dump($payload);
         return $this->request($payload);
     }
 
