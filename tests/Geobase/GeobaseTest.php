@@ -61,24 +61,32 @@ XML;
     }
 
     /**
-     * @param string $xml
+     * @param string $body
      * @return Geobase
      * @throws \ReflectionException
      */
-    public function createGeobase(string $xml)
+    public function createGeobase(string $body)
+    {
+        return new Geobase($this->createHttpClient($body));
+    }
+
+    /**
+     * @param string $body
+     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @throws \ReflectionException
+     */
+    private function createHttpClient(string $body)
     {
         $httpResponse = $this->createMock(ResponseInterface::class);
         $httpResponse
             ->method('getBody')
-            ->willReturn($xml);
+            ->willReturn($body);
 
         $httpClient = $this->createMock(Client::class);
         $httpClient
             ->method('request')
             ->willReturn($httpResponse);
 
-        $geobase = new Geobase($httpClient);
-
-        return $geobase;
+        return $httpClient;
     }
 }

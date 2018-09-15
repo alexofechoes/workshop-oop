@@ -1,17 +1,17 @@
 <?php
 
-namespace Php\Package\Geobase;
+namespace Php\Package\IpApi;
 
 use Exception;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\GuzzleException;
 use Php\Package\Common\HttpClient;
 use Php\Package\Dto\GeoData;
-use Php\Package\Geobase\Exception\GeobaseException;
+use Php\Package\IpApi\Exception\IpApiException;
 
-class Geobase
+class IpApi
 {
-    const URL = 'http://ipgeobase.ru:7020/geo?ip=';
+    const URL = 'http://ip-api.com/json/';
 
     /**
      * @var HttpClient
@@ -36,19 +36,19 @@ class Geobase
      * @param $ip
      * @return GeoData
      *
-     * @throws GeobaseException
+     * @throws IpApiException
      */
     public function getData($ip): GeoData
     {
         if (!filter_var($ip, FILTER_VALIDATE_IP)) {
-            throw new GeobaseException('Invalid ip');
+            throw new IpApiException('Invalid ip');
         }
 
         try {
             $rawData = $this->httpClient->request($ip);
             return $this->parser->parse($rawData);
         } catch (GuzzleException|Exception $exception) {
-            throw new GeobaseException($exception->getMessage(), $exception->getCode(), $exception);
+            throw new IpApiException($exception->getMessage(), $exception->getCode(), $exception);
         }
     }
 }

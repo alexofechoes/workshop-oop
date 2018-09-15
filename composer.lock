@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8367683723e46b7a763b29ca2c4894fb",
+    "content-hash": "caf9e0bb092d12a94498df2bb6ae8525",
     "packages": [
         {
             "name": "danielstjules/stringy",
@@ -2998,7 +2998,8 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "ext-simplexml": "^7.2"
+        "ext-simplexml": "^7.2",
+        "ext-json": "^1.6"
     },
     "platform-dev": []
 }

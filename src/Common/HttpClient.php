@@ -2,6 +2,7 @@
 
 namespace Php\Package\Common;
 
+use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
 
 class HttpClient
@@ -14,24 +15,17 @@ class HttpClient
     /**
      * @var string
      */
-    private $method;
-
-    /**
-     * @var string
-     */
     private $url;
 
     /**
      * HttpClient constructor.
-     * @param ClientInterface $client
-     * @param string $method
      * @param string $url
+     * @param null|ClientInterface $client
      */
-    public function __construct(ClientInterface $client, string $url, string $method = 'GET')
+    public function __construct(string $url, ?ClientInterface $client)
     {
-        $this->client = $client;
         $this->url = $url;
-        $this->method = $method;
+        $this->client = $client ?? new Client();
     }
 
     /**
@@ -42,7 +36,7 @@ class HttpClient
      */
     public function request(string $ip): string
     {
-        $response = $this->client->request($this->method, $this->getUrl($ip));
+        $response = $this->client->request('GET', $this->getUrl($ip));
         return (string)$response->getBody();
     }
 
@@ -51,7 +45,7 @@ class HttpClient
      *
      * @return string
      */
-    private function getUrl(string $ip) : string
+    private function getUrl(string $ip): string
     {
         return "{$this->url}{$ip}";
     }

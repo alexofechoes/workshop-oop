@@ -24,7 +24,8 @@ class GeoData
         string $region,
         string $lat,
         string $lng
-    ) {
+    )
+    {
         $this->country = $country;
         $this->city = $city;
         $this->region = $region;

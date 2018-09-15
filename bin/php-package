@@ -6,10 +6,18 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 $ip = '91.78.218.99';
 
-$client = new \GuzzleHttp\Client();
 
-$geoBase = new \Php\Package\Geobase\Geobase($client);
-$geoData = $geoBase->getData($ip);
+$geoService = new \Php\Package\Geobase\Geobase();
+$geoData = $geoService->getData($ip);
+
+echo $geoData->getCountry() . PHP_EOL;
+echo $geoData->getCity() . PHP_EOL;
+echo $geoData->getRegion() . PHP_EOL;
+echo $geoData->getLat() . PHP_EOL;
+echo $geoData->getLng() . PHP_EOL;
+
+$geoService = new \Php\Package\IpApi\IpApi();
+$geoData = $geoService->getData($ip);
 
 echo $geoData->getCountry() . PHP_EOL;
 echo $geoData->getCity() . PHP_EOL;

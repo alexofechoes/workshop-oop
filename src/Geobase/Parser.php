@@ -11,21 +11,17 @@ class Parser
     /**
      * @param string $xml
      * @return GeoData
+     *
      * @throws GeobaseException
      */
     public function parse(string $xml): GeoData
     {
-        if ($xml === '') {
-            throw new \InvalidArgumentException('Xml can\'t be blank');
-        }
-
         $simpleXMLElement = new SimpleXMLElement($xml);
+        $attributes = $simpleXMLElement->ip;
 
-        if (isset($simpleXMLElement->ip->message)) {
+        if (isset($attributes->message)) {
             throw new GeobaseException($simpleXMLElement->ip->message);
         }
-
-        $attributes = $simpleXMLElement->ip;
 
         return new GeoData(
             $attributes->country,
