@@ -1,6 +1,6 @@
 <?php
 
-namespace Php\Package\Dto;
+namespace Php\Package;
 
 class GeoData
 {
@@ -11,7 +11,6 @@ class GeoData
     private $lng;
 
     /**
-     * GeobaseData constructor.
      * @param $country
      * @param $city
      * @param $region

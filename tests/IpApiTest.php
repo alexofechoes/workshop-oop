@@ -2,8 +2,8 @@
 
 namespace Php\Package\Geobase\Tests;
 
-use GuzzleHttp\Client;
-use Php\Package\IpApi\IpApi;
+use GuzzleHttp\ClientInterface;
+use Php\Package\IpApi;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 
@@ -40,7 +40,7 @@ JSON;
     }
 
     /**
-     * @expectedException \Php\Package\IpApi\Exception\IpApiException
+     * @expectedException \Php\Package\Exception\GeoException
      * @expectedExceptionMessage reserved range
      */
     public function testRequestDataNotFound()
@@ -59,6 +59,7 @@ JSON;
     /**
      * @param string $body
      * @return IpApi
+     *
      * @throws \ReflectionException
      */
     private function createIpApi(string $body)
@@ -68,17 +69,18 @@ JSON;
 
     /**
      * @param string $body
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return ClientInterface
+     *
      * @throws \ReflectionException
      */
-    private function createHttpClient(string $body)
+    private function createHttpClient(string $body): ClientInterface
     {
         $httpResponse = $this->createMock(ResponseInterface::class);
         $httpResponse
             ->method('getBody')
             ->willReturn($body);
 
-        $httpClient = $this->createMock(Client::class);
+        $httpClient = $this->createMock(ClientInterface::class);
         $httpClient
             ->method('request')
             ->willReturn($httpResponse);

@@ -6,8 +6,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 $ip = '91.78.218.99';
 
-
-$geoService = new \Php\Package\Geobase\Geobase();
+$geoService = new \Php\Package\Geobase();
 $geoData = $geoService->getData($ip);
 
 echo $geoData->getCountry() . PHP_EOL;
@@ -16,7 +15,7 @@ echo $geoData->getRegion() . PHP_EOL;
 echo $geoData->getLat() . PHP_EOL;
 echo $geoData->getLng() . PHP_EOL;
 
-$geoService = new \Php\Package\IpApi\IpApi();
+$geoService = new \Php\Package\IpApi();
 $geoData = $geoService->getData($ip);
 
 echo $geoData->getCountry() . PHP_EOL;

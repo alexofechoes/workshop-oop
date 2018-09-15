@@ -2,8 +2,8 @@
 
 namespace Php\Package\Geobase\Tests;
 
-use GuzzleHttp\Client;
-use Php\Package\Geobase\Geobase;
+use GuzzleHttp\ClientInterface;
+use Php\Package\Geobase;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 
@@ -35,7 +35,7 @@ XML;
     }
 
     /**
-     * @expectedException \Php\Package\Geobase\Exception\GeobaseException
+     * @expectedException \Php\Package\Exception\GeoException
      * @expectedExceptionMessage Invalid ip
      */
     public function testRequestDataInvalidIp()
@@ -44,7 +44,7 @@ XML;
     }
 
     /**
-     * @expectedException \Php\Package\Geobase\Exception\GeobaseException
+     * @expectedException \Php\Package\Exception\GeoException
      * @expectedExceptionMessage Not found
      */
     public function testRequestDataNotFound()
@@ -72,17 +72,18 @@ XML;
 
     /**
      * @param string $body
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return ClientInterface
+     *
      * @throws \ReflectionException
      */
-    private function createHttpClient(string $body)
+    private function createHttpClient(string $body): ClientInterface
     {
         $httpResponse = $this->createMock(ResponseInterface::class);
         $httpResponse
             ->method('getBody')
             ->willReturn($body);
 
-        $httpClient = $this->createMock(Client::class);
+        $httpClient = $this->createMock(ClientInterface::class);
         $httpClient
             ->method('request')
             ->willReturn($httpResponse);
