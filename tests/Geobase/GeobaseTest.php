@@ -1,12 +1,11 @@
 <?php
 
-namespace Php\Package\Tests;
+namespace Php\Package\Geobase\Tests;
 
-use Php\Package\Dto\GeobaseData;
-use Php\Package\Geobase;
-use Php\Package\HttpClient;
-use Php\Package\GeobaseParser;
+use GuzzleHttp\Client;
+use Php\Package\Geobase\Geobase;
 use PHPUnit\Framework\TestCase;
+use Psr\Http\Message\ResponseInterface;
 
 class GeobaseTest extends TestCase
 {
@@ -26,29 +25,26 @@ class GeobaseTest extends TestCase
 </ip-answer>
 XML;
 
-        $geobaseData = $this->createGeobase($xml)->requestData('91.76.0.2');
+        $geobaseData = $this->createGeobase($xml)->getData('91.76.0.2');
 
-        $this->assertInstanceOf(GeobaseData::class, $geobaseData);
-        $this->assertEquals('91.76.0.0 - 91.79.255.255', $geobaseData->getInetnum());
         $this->assertEquals('RU', $geobaseData->getCountry());
         $this->assertEquals('Москва', $geobaseData->getCity());
         $this->assertEquals('Москва', $geobaseData->getRegion());
-        $this->assertEquals('Центральный федеральный округ', $geobaseData->getDistrict());
         $this->assertEquals('55.755787', $geobaseData->getLat());
         $this->assertEquals('37.617634', $geobaseData->getLng());
     }
 
     /**
-     * @expectedException \Php\Package\Exception\GeobaseException
+     * @expectedException \Php\Package\Geobase\Exception\GeobaseException
      * @expectedExceptionMessage Invalid ip
      */
     public function testRequestDataInvalidIp()
     {
-        $this->createGeobase('')->requestData('1.257.3288.338');
+        $this->createGeobase('')->getData('1.257.3288.338');
     }
 
     /**
-     * @expectedException \Php\Package\Exception\GeobaseException
+     * @expectedException \Php\Package\Geobase\Exception\GeobaseException
      * @expectedExceptionMessage Not found
      */
     public function testRequestDataNotFound()
@@ -61,7 +57,7 @@ XML;
 </ip-answer>
 XML;
 
-        $this->createGeobase($xml)->requestData('91.76.0.2');
+        $this->createGeobase($xml)->getData('91.76.0.2');
     }
 
     /**
@@ -71,18 +67,18 @@ XML;
      */
     public function createGeobase(string $xml)
     {
-        $httpClient = $this->createMock(HttpClient::class);
+        $httpResponse = $this->createMock(ResponseInterface::class);
+        $httpResponse
+            ->method('getBody')
+            ->willReturn($xml);
+
+        $httpClient = $this->createMock(Client::class);
         $httpClient
             ->method('request')
-            ->willReturn($xml);
+            ->willReturn($httpResponse);
 
-        $httpClient
-            ->method('__invoke')
-            ->willReturn($xml);
 
-        $parser = new GeobaseParser();
-
-        $geobase = new Geobase($httpClient, $parser);
+        $geobase = new Geobase($httpClient);
 
         return $geobase;
     }

@@ -2,17 +2,17 @@
 
 namespace Php\Package\Tests;
 
-use Php\Package\Dto\GeobaseData;
+use Php\Package\Dto\GeoData;
+use Php\Package\Geobase\Parser;
 use PHPUnit\Framework\TestCase;
-use Php\Package\GeobaseParser;
 
-class GeobaseParserTest extends TestCase
+class ParserTest extends TestCase
 {
     private $parser;
 
     public function setUp()
     {
-        $this->parser = new GeobaseParser();
+        $this->parser = new Parser();
     }
 
 
@@ -32,20 +32,18 @@ class GeobaseParserTest extends TestCase
 </ip-answer>
 XML;
 
-        $geobaseData = $this->parser->parse($xml);
+        $geoData = $this->parser->parse($xml);
 
-        $this->assertInstanceOf(GeobaseData::class, $geobaseData);
-        $this->assertEquals('91.76.0.0 - 91.79.255.255', $geobaseData->getInetnum());
-        $this->assertEquals('RU', $geobaseData->getCountry());
-        $this->assertEquals('Москва', $geobaseData->getCity());
-        $this->assertEquals('Москва', $geobaseData->getRegion());
-        $this->assertEquals('Центральный федеральный округ', $geobaseData->getDistrict());
-        $this->assertEquals('55.755787', $geobaseData->getLat());
-        $this->assertEquals('37.617634', $geobaseData->getLng());
+        $this->assertInstanceOf(GeoData::class, $geoData);
+        $this->assertEquals('RU', $geoData->getCountry());
+        $this->assertEquals('Москва', $geoData->getCity());
+        $this->assertEquals('Москва', $geoData->getRegion());
+        $this->assertEquals('55.755787', $geoData->getLat());
+        $this->assertEquals('37.617634', $geoData->getLng());
     }
 
     /**
-     * @expectedException \Php\Package\Exception\GeobaseException
+     * @expectedException \Php\Package\Geobase\Exception\GeobaseException
      * @expectedExceptionMessage Not found
      */
     public function testParseNotFound()

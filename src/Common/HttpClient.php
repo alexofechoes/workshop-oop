@@ -1,6 +1,6 @@
 <?php
 
-namespace Php\Package;
+namespace Php\Package\Common;
 
 use GuzzleHttp\ClientInterface;
 use League\Pipeline\StageInterface;
@@ -28,11 +28,11 @@ class HttpClient implements StageInterface
      * @param string $method
      * @param string $url
      */
-    public function __construct(ClientInterface $client, string $method, string $url)
+    public function __construct(ClientInterface $client, string $url, string $method = 'GET')
     {
         $this->client = $client;
-        $this->method = $method;
         $this->url = $url;
+        $this->method = $method;
     }
 
     /**

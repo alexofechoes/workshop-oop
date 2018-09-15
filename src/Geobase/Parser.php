@@ -1,31 +1,31 @@
 <?php
 
-namespace Php\Package;
+namespace Php\Package\Geobase;
 
 use League\Pipeline\StageInterface;
-use Php\Package\Dto\GeobaseData;
-use Php\Package\Exception\GeobaseException;
+use Php\Package\Dto\GeoData;
+use Php\Package\Geobase\Exception\GeobaseException;
 use SimpleXMLElement;
 
-class GeobaseParser implements StageInterface
+class Parser implements StageInterface
 {
     /**
      * @param string $payload
-     * @return GeobaseData
+     * @return GeoData
      *
      * @throws GeobaseException
      */
-    public function __invoke($payload): GeobaseData
+    public function __invoke($payload): GeoData
     {
         return $this->parse($payload);
     }
 
     /**
      * @param string $xml
-     * @return GeobaseData
+     * @return GeoData
      * @throws GeobaseException
      */
-    public function parse(string $xml): GeobaseData
+    public function parse(string $xml): GeoData
     {
         if ($xml === '') {
             throw new \InvalidArgumentException('Xml can\'t be blank');
@@ -39,12 +39,10 @@ class GeobaseParser implements StageInterface
 
         $attributes = $simpleXMLElement->ip;
 
-        return new GeobaseData(
-            $attributes->inetnum,
+        return new GeoData(
             $attributes->country,
             $attributes->city,
             $attributes->region,
-            $attributes->district,
             $attributes->lat,
             $attributes->lng
         );
