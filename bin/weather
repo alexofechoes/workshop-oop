@@ -1,0 +1,45 @@
+#!/usr/bin/env php
+
+<?php
+
+require_once __DIR__ . '/../vendor/autoload.php';
+
+$climate = new \League\CLImate\CLImate;
+
+$climate->arguments->add([
+    'service' => [
+        'prefix' => 's',
+        'longPrefix' => 'service',
+        'description' => 'weather service. Supported services - "metaweather", "otherweather"',
+        'required' => true,
+    ],
+    'city' => [
+        'prefix' => 'c',
+        'longPrefix' => 'city',
+        'description' => 'city',
+        'required' => true,
+    ]
+]);
+
+try {
+    $climate->arguments->parse();
+} catch (Exception $e) {
+    $climate->usage();
+    exit($e->getCode());
+}
+
+try {
+    $serviceName = $climate->arguments->get('service');
+    $service = \Php\Package\Weather\WeatherServiceFactory::createService($serviceName);
+
+    $city = $climate->arguments->get('city');
+    $weatherData = $service->getData($city);
+
+    $climate->out('temp ' . $weatherData->getTemp());
+    $climate->out('humidity ' . $weatherData->getHumidity());
+    $climate->out('pressure ' . $weatherData->getPressure());
+    $climate->out('wind speed ' . $weatherData->getWindSpeed());
+} catch (Exception $e) {
+    $climate->error($e->getMessage());
+    exit($e->getCode());
+}
