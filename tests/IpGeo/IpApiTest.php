@@ -1,9 +1,9 @@
 <?php
 
-namespace Php\Package\Geobase\Tests;
+namespace Php\Package\Tests\IpGeo;
 
 use GuzzleHttp\ClientInterface;
-use Php\Package\IpApi;
+use Php\Package\IpGeo\IpApi;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 
@@ -40,7 +40,7 @@ JSON;
     }
 
     /**
-     * @expectedException \Php\Package\Exception\GeoException
+     * @expectedException \Php\Package\IpGeo\Exception\GeoException
      * @expectedExceptionMessage reserved range
      */
     public function testRequestDataNotFound()

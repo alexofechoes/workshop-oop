@@ -1,0 +1,25 @@
+#!/usr/bin/env php
+
+<?php
+
+require_once __DIR__ . '/../vendor/autoload.php';
+
+$ip = '91.78.218.99';
+
+$geoService = new \Php\Package\IpGeo\Geobase();
+$geoData = $geoService->getData($ip);
+
+echo $geoData->getCountry() . PHP_EOL;
+echo $geoData->getCity() . PHP_EOL;
+echo $geoData->getRegion() . PHP_EOL;
+echo $geoData->getLat() . PHP_EOL;
+echo $geoData->getLng() . PHP_EOL;
+
+$geoService = new \Php\Package\IpGeo\IpApi();
+$geoData = $geoService->getData($ip);
+
+echo $geoData->getCountry() . PHP_EOL;
+echo $geoData->getCity() . PHP_EOL;
+echo $geoData->getRegion() . PHP_EOL;
+echo $geoData->getLat() . PHP_EOL;
+echo $geoData->getLng() . PHP_EOL;

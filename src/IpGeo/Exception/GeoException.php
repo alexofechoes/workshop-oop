@@ -1,6 +1,6 @@
 <?php
 
-namespace Php\Package\Exception;
+namespace Php\Package\IpGeo\Exception;
 
 use Exception;
 

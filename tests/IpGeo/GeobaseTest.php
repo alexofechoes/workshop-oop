@@ -1,9 +1,9 @@
 <?php
 
-namespace Php\Package\Geobase\Tests;
+namespace Php\Package\Tests\IpGeo;
 
 use GuzzleHttp\ClientInterface;
-use Php\Package\Geobase;
+use Php\Package\IpGeo\Geobase;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 
@@ -35,7 +35,7 @@ XML;
     }
 
     /**
-     * @expectedException \Php\Package\Exception\GeoException
+     * @expectedException \Php\Package\IpGeo\Exception\GeoException
      * @expectedExceptionMessage Invalid ip
      */
     public function testRequestDataInvalidIp()
@@ -44,7 +44,7 @@ XML;
     }
 
     /**
-     * @expectedException \Php\Package\Exception\GeoException
+     * @expectedException \Php\Package\IpGeo\Exception\GeoException
      * @expectedExceptionMessage Not found
      */
     public function testRequestDataNotFound()

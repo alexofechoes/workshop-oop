@@ -1,12 +1,12 @@
 <?php
 
-namespace Php\Package;
+namespace Php\Package\IpGeo;
 
 use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\GuzzleException;
-use Php\Package\Exception\GeoException;
+use Php\Package\IpGeo\Exception\GeoException;
 
 class IpApi
 {

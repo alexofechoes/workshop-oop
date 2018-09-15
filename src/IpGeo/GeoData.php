@@ -1,6 +1,6 @@
 <?php
 
-namespace Php\Package;
+namespace Php\Package\IpGeo;
 
 class GeoData
 {
