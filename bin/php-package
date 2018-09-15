@@ -8,7 +8,7 @@ $url = 'http://ipgeobase.ru:7020/geo?ip=';
 $ip = '91.78.218.99';
 
 $client = new \Php\Package\HttpClient(new \GuzzleHttp\Client(), 'GET', $url);
-$parser = new \Php\Package\Parser();
+$parser = new \Php\Package\GeobaseParser();
 
 $geoBase = new \Php\Package\Geobase($client, $parser);
 $geoData = $geoBase->requestData($ip);

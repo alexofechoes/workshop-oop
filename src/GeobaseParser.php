@@ -6,7 +6,7 @@ use Php\Package\Dto\GeobaseData;
 use Php\Package\Exception\GeobaseException;
 use SimpleXMLElement;
 
-class Parser
+class GeobaseParser
 {
     /**
      * @param string $xml
@@ -15,6 +15,10 @@ class Parser
      */
     public function parse(string $xml): GeobaseData
     {
+        if ($xml === '') {
+            throw new \InvalidArgumentException('Xml can\'t be blank');
+        }
+
         $simpleXMLElement = new SimpleXMLElement($xml);
 
         if (isset($simpleXMLElement->ip->message)) {

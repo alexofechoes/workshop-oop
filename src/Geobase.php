@@ -15,7 +15,7 @@ class Geobase
     private $httpClient;
 
     /**
-     * @var Parser
+     * @var GeobaseParser
      */
     private $parser;
 
@@ -34,7 +34,7 @@ class Geobase
     public function requestData($ip): GeobaseData
     {
         if (!filter_var($ip, FILTER_VALIDATE_IP)) {
-            throw new GeobaseException('invalid ip');
+            throw new GeobaseException('Invalid ip');
         }
 
         try {
