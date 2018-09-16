@@ -8,5 +8,5 @@ interface WeatherServiceInterface
      * @param string $city
      * @return WeatherData
      */
-    public function getData(string $city): WeatherData;
+    public function getForecast(string $city): WeatherData;
 }

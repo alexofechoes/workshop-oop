@@ -26,11 +26,16 @@ class Weather
 
     /**
      * @param $city
+     * @param string|null $serviceName
      * @return WeatherData
      */
-    public function getData(string $city): WeatherData
+    public function getForecast(string $city, string $serviceName = null): WeatherData
     {
-        return $this->service->getData($city);
+        if ($serviceName) {
+            return $this->createService($serviceName)->getForecast($city);
+        }
+
+        return $this->service->getForecast($city);
     }
 
     /**

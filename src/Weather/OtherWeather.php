@@ -31,7 +31,7 @@ class OtherWeather implements WeatherServiceInterface
      * @throws WeatherException
      * @throw InvalidArgumentException
      */
-    public function getData(string $city): WeatherData
+    public function getForecast(string $city): WeatherData
     {
         if (!$city === '') {
             throw new \InvalidArgumentException('City can\'t be blank');

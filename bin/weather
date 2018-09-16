@@ -36,7 +36,7 @@ try {
     $service = new Weather($serviceName);
 
     $city = $climate->arguments->get('city');
-    $weatherData = $service->getData($city);
+    $weatherData = $service->getForecast($city);
 
     $climate->out('temp ' . $weatherData->getTemp());
     $climate->out('humidity ' . $weatherData->getHumidity());
