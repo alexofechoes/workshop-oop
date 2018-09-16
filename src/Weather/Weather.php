@@ -15,6 +15,11 @@ class Weather
     private $service;
 
     /**
+     * @var array
+     */
+    private $instanceServices = [];
+
+    /**
      * @param string $serviceName
      * @param array $additionalServices
      */
@@ -50,6 +55,10 @@ class Weather
             throw new \InvalidArgumentException('Service not supported');
         }
 
-        return new $this->services[$serviceName];
+        if (!array_key_exists($serviceName, $this->instanceServices)) {
+            $this->instanceServices[$serviceName] = new $this->services[$serviceName];
+        }
+
+        return $this->instanceServices[$serviceName];
     }
 }
