@@ -4,23 +4,28 @@ namespace Php\Package\Weather;
 
 class WeatherServiceFactory
 {
-    private static $services = [
-        'metaweather' => MetaWeather::class,
-        'otherweather' => OtherWeather::class,
-    ];
+    private $services;
 
     /**
-     * @param $serviceName
-     * @return MetaWeather|OtherWeather
+     * @param array $services
+     */
+    public function __construct(array $services)
+    {
+       $this->services = $services;
+    }
+
+    /**
+     * @param string $serviceName
+     * @return WeatherServiceInterface
      *
      * @throw InvalidArgumentException
      */
-    public static function createService($serviceName)
+    public function createService($serviceName): WeatherServiceInterface
     {
-        if (!in_array($serviceName, array_keys(self::$services))) {
+        if (!in_array($serviceName, array_keys($this->services))) {
             throw new \InvalidArgumentException('Service not supported');
         }
 
-        return new self::$services[$serviceName];
+        return new $this->services[$serviceName];
     }
 }

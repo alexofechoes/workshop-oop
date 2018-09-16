@@ -7,8 +7,15 @@ use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\GuzzleException;
 use Php\Package\Weather\Exception\WeatherException;
 
-class MetaWeather
+class MetaWeather implements WeatherServiceInterface
 {
+    const URL = 'https://www.metaweather.com/api/location/';
+
+    /**
+     * @var ClientInterface
+     */
+    private $httpClient;
+
     /**
      * @param ClientInterface|null $client
      */
@@ -68,4 +75,22 @@ class MetaWeather
         return self::URL . $this->getCityId($city);
     }
 
+    /**
+     * @param $city
+     * @return mixed
+     *
+     * @throws WeatherException
+     * @throws GuzzleException
+     */
+    private function getCityId($city)
+    {
+        $response = $this->httpClient->request('GET', 'https://www.metaweather.com/api/location/search/?query=' . $city);
+
+        $json = json_decode($response->getBody());
+        if (!$json) {
+            throw new WeatherException('City not found');
+        }
+
+        return $json[0]->woeid;
+    }
 }

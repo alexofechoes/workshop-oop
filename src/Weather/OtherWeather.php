@@ -7,7 +7,7 @@ use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\GuzzleException;
 use Php\Package\Weather\Exception\WeatherException;
 
-class OtherWeather
+class OtherWeather implements WeatherServiceInterface
 {
     const URL = 'https://www.metaweather.com/api/location/';
 

@@ -9,10 +9,23 @@ use PHPUnit\Framework\TestCase;
 
 class WeatherServiceFactoryTest extends TestCase
 {
+    /**
+     * @var WeatherServiceFactory
+     */
+    private $serviceFactory;
+
+    public function setUp()
+    {
+        $this->serviceFactory = new WeatherServiceFactory([
+            'meta-weather' => MetaWeather::class,
+            'other-weather' => OtherWeather::class
+        ]);
+    }
+
     public function testRequestData()
     {
-        $this->assertInstanceOf(MetaWeather::class, WeatherServiceFactory::createService('metaweather'));
-        $this->assertInstanceOf(OtherWeather::class, WeatherServiceFactory::createService('otherweather'));
+        $this->assertInstanceOf(MetaWeather::class, $this->serviceFactory->createService('meta-weather'));
+        $this->assertInstanceOf(OtherWeather::class, $this->serviceFactory->createService('other-weather'));
     }
 
     /**
@@ -20,6 +33,6 @@ class WeatherServiceFactoryTest extends TestCase
      */
     public function testUnsupportedService()
     {
-        WeatherServiceFactory::createService('unsupportedService');
+        $this->serviceFactory->createService('unsupported-service-weather');
     }
 }

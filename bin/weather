@@ -2,9 +2,14 @@
 
 <?php
 
+use League\CLImate\CLImate;
+use Php\Package\Weather\MetaWeather;
+use Php\Package\Weather\OtherWeather;
+use Php\Package\Weather\WeatherServiceFactory;
+
 require_once __DIR__ . '/../vendor/autoload.php';
 
-$climate = new \League\CLImate\CLImate;
+$climate = new CLImate;
 
 $climate->arguments->add([
     'service' => [
@@ -29,8 +34,13 @@ try {
 }
 
 try {
+    $serviceFactory = new WeatherServiceFactory([
+        'meta-weather' => MetaWeather::class,
+        'other-weather' => OtherWeather::class
+    ]);
+
     $serviceName = $climate->arguments->get('service');
-    $service = \Php\Package\Weather\WeatherServiceFactory::createService($serviceName);
+    $service = $serviceFactory->createService($serviceName);
 
     $city = $climate->arguments->get('city');
     $weatherData = $service->getData($city);
