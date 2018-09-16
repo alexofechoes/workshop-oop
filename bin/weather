@@ -3,9 +3,7 @@
 <?php
 
 use League\CLImate\CLImate;
-use Php\Package\Weather\MetaWeather;
-use Php\Package\Weather\OtherWeather;
-use Php\Package\Weather\WeatherServiceFactory;
+use Php\Package\Weather\Weather;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
@@ -35,7 +33,7 @@ try {
 
 try {
     $serviceName = $climate->arguments->get('service');
-    $service = new \Php\Package\Weather\Weather($serviceName);
+    $service = new Weather($serviceName);
 
     $city = $climate->arguments->get('city');
     $weatherData = $service->getData($city);
