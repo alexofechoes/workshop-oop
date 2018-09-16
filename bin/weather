@@ -34,13 +34,8 @@ try {
 }
 
 try {
-    $serviceFactory = new WeatherServiceFactory([
-        'meta-weather' => MetaWeather::class,
-        'other-weather' => OtherWeather::class
-    ]);
-
     $serviceName = $climate->arguments->get('service');
-    $service = $serviceFactory->createService($serviceName);
+    $service = new \Php\Package\Weather\Weather($serviceName);
 
     $city = $climate->arguments->get('city');
     $weatherData = $service->getData($city);
